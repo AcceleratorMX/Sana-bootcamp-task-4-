@@ -73,11 +73,11 @@ button {
 }
 
 .delete-icon {
-  filter: opacity(0.5);
+  filter: opacity(1);
 }
 
 .delete-icon:hover {
-  filter: opacity(1);
+  filter: opacity(0.5);
 }
 
 .list-group-item {

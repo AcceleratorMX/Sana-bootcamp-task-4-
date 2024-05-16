@@ -1,7 +1,7 @@
 @model JobViewModel
 
 <div class="add-form">
-    <form asp-action="Todo" class="d-flex justify-content-center">
+    <form asp-controller="Todo" asp-action="Todo" class="d-flex justify-content-center">
         @Html.AntiForgeryToken()
         <div class="form-group text-center">
             <label asp-for="NewJob.Name">Назва завдання</label>

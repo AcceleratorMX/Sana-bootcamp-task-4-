@@ -1,48 +1,72 @@
 using MyTodoList.Data;
-using MyTodoList.Interfaces;
+using MyTodoList.Data.Service;
 using MyTodoList.Repositories;
 
-namespace MyTodoList;
+var builder = WebApplication.CreateBuilder(args);
 
-public class Program
+// Add services to the container.
+builder.Services.AddControllersWithViews();
+
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession(options =>
 {
-    public static void Main(string[] args)
-    {
-        var builder = WebApplication.CreateBuilder(args);
+    options.IdleTimeout = TimeSpan.FromMinutes(30);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
 
-        // Add services to the container.
-        builder.Services.AddControllersWithViews();
+builder.Services.AddTransient<JobRepositorySql>();
+builder.Services.AddTransient<JobRepositoryXml>();
 
-        builder.Services.AddScoped<IJobRepository, JobRepository>();
-        builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
-        
-        var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ??
-                                 throw new Exception("Connection string is not valid!");
-        
-        var databaseService = new DatabaseService(connectionString);
-        builder.Services.AddSingleton(databaseService);
+builder.Services.AddTransient<JobRepositorySwitcher>(sp => new JobRepositorySwitcher(
+    sp.GetRequiredService<JobRepositorySql>(),
+    sp.GetRequiredService<JobRepositoryXml>(),
+    sp.GetRequiredService<IHttpContextAccessor>(),
+    sp.GetRequiredService<ILogger<JobRepositorySwitcher>>()
+));
 
-        var app = builder.Build();
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
-        // Configure the HTTP request pipeline.
-        if (!app.Environment.IsDevelopment())
-        {
-            app.UseExceptionHandler("/Home/Error");
-            // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-            app.UseHsts();
-        }
 
-        app.UseHttpsRedirection();
-        app.UseStaticFiles();
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ??
+                         throw new Exception("Connection string is not valid!");
 
-        app.UseRouting();
+var databaseService = new DatabaseService(connectionString);
+builder.Services.AddSingleton(databaseService);
 
-        app.UseAuthorization();
+var xmlFilesDirectory = Path.Combine(
+    Directory.GetCurrentDirectory(), builder.Configuration.GetValue<string>("XmlFilesDirectory") ?? 
+                                     throw new InvalidOperationException("XmlFilesDirectory is not valid!"));
+builder.Services.AddSingleton(new XmlStorageService(xmlFilesDirectory));
 
-        app.MapControllerRoute(
-            name: "default",
-            pattern: "{controller=Todo}/{action=Todo}/{id?}");
+// Add logging
+builder.Services.AddLogging(config =>
+{
+    config.ClearProviders();
+    config.AddConsole();
+    config.AddDebug();
+});
 
-        app.Run();
-    }
+var app = builder.Build();
+
+// Configure the HTTP request pipeline.
+if (!app.Environment.IsDevelopment())
+{
+    app.UseExceptionHandler("/Home/Error");
+    app.UseHsts();
 }
+
+app.UseHttpsRedirection();
+app.UseStaticFiles();
+
+app.UseRouting();
+
+app.UseSession(); // Add this line
+
+app.UseAuthorization();
+
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Todo}/{action=Todo}/{id?}");
+
+app.Run();

@@ -1,16 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
-
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Categories>
-    <Category>
-        <Id>1</Id>
-        <Name>Дім</Name>
-    </Category>
-    <Category>
-        <Id>2</Id>
-        <Name>Робота</Name>
-    </Category>
-    <Category>
-        <Id>3</Id>
-        <Name>Навчання</Name>
-    </Category>
+  <Category id="1">Work</Category>
+  <Category id="2">Personal</Category>
+  <Category id="3">Home</Category>
 </Categories>

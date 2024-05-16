@@ -5,9 +5,10 @@ using MyTodoList.Interfaces;
 
 namespace MyTodoList.Repositories;
 
-public class JobRepository(DatabaseService databaseService) : IJobRepository
+public class JobRepositorySql(DatabaseService databaseService, ILogger<JobRepositorySql> logger) : IJobRepository
 {
     private readonly DatabaseService _databaseService = databaseService;
+    private readonly ILogger<JobRepositorySql> _logger = logger;
 
     public async Task<int> AddJob(Job job)
     {
@@ -29,6 +30,7 @@ public class JobRepository(DatabaseService databaseService) : IJobRepository
 
     public async Task<IEnumerable<Job>> GetJobs()
     {
+        _logger.LogInformation("Fetching jobs from SQL repository.");
         using var connection = _databaseService.OpenConnection();
     
         var jobs = (await connection.QueryAsync<Job>("SELECT Id, Name, CategoryId, IsDone FROM Jobs")).ToList();
@@ -58,5 +60,11 @@ public class JobRepository(DatabaseService databaseService) : IJobRepository
     {
         using var db = _databaseService.OpenConnection();
         return await db.ExecuteAsync("DELETE FROM Jobs WHERE Id = @Id", new { Id = id });
+    }
+    
+    public async Task<IEnumerable<Category>> GetCategories()
+    {
+        using var db = _databaseService.OpenConnection();
+        return await db.QueryAsync<Category>("SELECT Id, Name FROM Categories");
     }
 }

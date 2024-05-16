@@ -3,8 +3,7 @@
     ViewData["Title"] = "My TODO`s";
 }
 
-@await Html.PartialAsync("NewJobPartial")
-
+@await Html.PartialAsync("CreateFormPartial")
 
 <ul class="list-group">
     @foreach (var job in Model.Jobs.OrderBy(j => j.IsDone))
@@ -15,7 +14,7 @@
             <div class="buttons-cell d-flex justify-content-between align-items-center">
                 @if (!job.IsDone)
                 {
-                    <form asp-action="ChangeProgress">
+                    <form asp-controller="Todo" asp-action="ChangeProgress">
                         <label asp-for="@job.Id">Завершити</label>
                         <input asp-for="@job.Id" type="hidden" name="id"/>
                         <button type="submit" class="btn btn-outline-success">Завершити</button>
@@ -26,7 +25,7 @@
                     <button type="submit" class="btn btn-outline-dark" disabled>
                         <i>Завершeно</i>
                     </button>
-                    <form asp-action="Delete" class="delete-button">
+                    <form asp-controller="Todo" asp-action="Delete" class="delete-button">
                         <label asp-for="@job.Id">Видалити</label>
                         <input asp-for="@job.Id" type="hidden" name="id"/>
                         <button type="submit">

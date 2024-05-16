@@ -9,4 +9,5 @@ public interface IJobRepository
     public Task<Job> GetJob(int id);
     public Task<int> UpdateJob(Job job);
     public Task<int> DeleteJob(int id);
+    public Task<IEnumerable<Category>> GetCategories();
 }
