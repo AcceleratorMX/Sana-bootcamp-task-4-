@@ -1,0 +1,61 @@
+﻿@model JobViewModel
+@{
+    ViewData["Title"] = "My TODO`s";
+}
+
+<div class="add-form">
+    <form asp-action="Todo" class="d-flex justify-content-center">
+        @Html.AntiForgeryToken()
+        <div class="form-group text-center">
+            <label asp-for="NewJob.Name">Назва завдання</label>
+            <input asp-for="NewJob.Name" class="form-control input-job-name" placeholder="Сформулюйте завдання"/>
+            <span asp-validation-for="NewJob.Name" class="text-danger validation-error"></span>
+        </div>
+        <div class="form-group text-center">
+            <label asp-for="NewJob.CategoryId">Категорія</label>
+            <select asp-for="NewJob.CategoryId" class="form-control input-job-category text-center mx-md-2" asp-items="ViewBag.Categories">
+                <option value="0">Оберіть категорію</option>
+            </select>
+            <span asp-validation-for="NewJob.CategoryId" class="text-danger validation-error"></span>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-auto">
+                <button type="submit" class="btn btn-outline-primary">Створити</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+<ul class="list-group">
+    @foreach (var job in Model.Jobs.OrderBy(j => j.IsDone))
+    {
+        <li class="list-group-item d-flex align-items-center @(job.IsDone ? "text-muted" : "")">
+            <div class="name-cell">@job.Name</div>
+            <div class="category-cell text-center mx-md-2">@job.Category.Name</div>
+            <div class="buttons-cell d-flex justify-content-between align-items-center">
+                @if (!job.IsDone)
+                {
+                    <form asp-action="ChangeProgress">
+                        <label asp-for="@job.Id">Завершити</label>
+                        <input asp-for="@job.Id" type="hidden" name="id"/>
+                        <button type="submit" class="btn btn-outline-success">Завершити</button>
+                    </form>
+                }
+                else
+                {
+                    <button type="submit" class="btn btn-outline-dark" disabled>
+                        <i>Завершeно</i>
+                    </button>
+                    <form asp-action="Delete" class="delete-button">
+                        <label asp-for="@job.Id">Видалити</label>
+                        <input asp-for="@job.Id" type="hidden" name="id"/>
+                        <button type="submit">
+                            <img src="~/images/icons/icons8-delete-trash-32.png" alt="delete" class="delete-icon"/>
+                        </button>
+                    </form>
+                }
+            </div>
+        </li>
+    }
+</ul>

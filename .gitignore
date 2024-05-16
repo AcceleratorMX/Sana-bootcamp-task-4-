@@ -1,0 +1,13 @@
+.idea/
+.vscode/
+.vs/
+.github/
+**/Debug/**
+**/Release/**
+**/build/**
+x64/
+bin/
+obj/
+TestResults/
+*.exe
+*.user

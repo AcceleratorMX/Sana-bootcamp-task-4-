@@ -1,0 +1,122 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: rgba(176, 209, 255, 0.52);
+  font-size: 18px;
+}
+
+main {
+  flex: 1 0 auto;
+}
+
+header {
+  position: fixed;
+  width: 100vw;
+  top: 0;
+  z-index: 1;
+}
+
+header,
+footer {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+label {
+  display: none;
+}
+
+button {
+  border: none;
+  background-color: transparent;
+}
+
+.add-form {
+  margin: 100px 0 50px 0;
+}
+
+.validation-error {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.input-job-name {
+  width: 46vw;
+}
+
+.input-job-category {
+  width: 9vw;
+}
+
+.delete-button {
+  display: none;
+  position: absolute;
+  transform: translate(250%, 0);
+}
+
+.delete-icon {
+  filter: opacity(0.5);
+}
+
+.delete-icon:hover {
+  filter: opacity(1);
+}
+
+.list-group-item {
+  border: 2px solid #fff;
+  border-top: 2px solid #fff !important;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+.list-group-item:hover {
+  transform: scale(1.01);
+  background-color: rgba(176, 209, 255, 0.52);
+  .delete-button {
+    display: inline;
+  }
+}
+
+.name-cell {
+  padding: 5px;
+  width: 70vw;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  word-break: break-all;
+}
+
+.list-group-item:hover .name-cell {
+  background-color: #fff;
+}
+
+.category-cell {
+  width: 7vw;
+}
+
+.buttons-cell {
+  width: 10vw;
+}
+
+
+.footer {
+  flex-shrink: 0;
+  line-height: 60px;
+}
