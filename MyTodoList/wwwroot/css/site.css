@@ -59,11 +59,18 @@ button {
 }
 
 .input-job-name {
-  width: 46vw;
+  width: 48vw;
 }
 
-.input-job-category {
-  width: 9vw;
+.input-job-name,
+.input-job-category,
+.switch-form {
+  border: 1px solid #fff;
+}
+
+.input-job-category,
+.category-cell{
+  width: 7vw;
 }
 
 .delete-button {
@@ -85,6 +92,7 @@ button {
   border-top: 2px solid #fff !important;
   border-radius: 5px;
   margin-bottom: 10px;
+  transition: transform 0.2s ease-in-out;
 }
 
 .list-group-item:hover {
@@ -101,14 +109,6 @@ button {
   border: 1px solid transparent;
   border-radius: 5px;
   word-break: break-all;
-}
-
-.list-group-item:hover .name-cell {
-  background-color: #fff;
-}
-
-.category-cell {
-  width: 7vw;
 }
 
 .buttons-cell {

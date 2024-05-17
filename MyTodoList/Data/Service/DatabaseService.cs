@@ -2,7 +2,7 @@
 using System.Data.SqlClient;
 using Dapper;
 
-namespace MyTodoList.Data;
+namespace MyTodoList.Data.Service;
 
 public class DatabaseService
 {

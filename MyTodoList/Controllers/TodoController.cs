@@ -1,10 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using MyTodoList.Data.Models;
-using MyTodoList.Interfaces;
 using MyTodoList.Repositories;
 using MyTodoList.ViewModels;
-using Microsoft.Extensions.Logging;
 
 namespace MyTodoList.Controllers
 {

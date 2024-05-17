@@ -17,14 +17,14 @@ public class XmlStorageService
         var jobsFilePath = Path.Combine(_xmlFilesDirectory, "Jobs.xml");
         if (!File.Exists(jobsFilePath))
         {
-            var newJobsXml = new XDocument(new XElement("Jobs"));
-            newJobsXml.Save(jobsFilePath);
+            var defaultJobsXml = new XDocument(new XElement("Jobs"));
+            defaultJobsXml.Save(jobsFilePath);
         }
 
         var categoriesFilePath = Path.Combine(_xmlFilesDirectory, "Categories.xml");
         if (!File.Exists(categoriesFilePath))
         {
-            var newCategoriesXml = new XDocument(
+            var defaultCategoriesXml = new XDocument(
                 new XElement("Categories",
                     new XElement("Category", new XAttribute("id", 1), "Work"),
                     new XElement("Category", new XAttribute("id", 2), "Personal"),
@@ -32,7 +32,7 @@ public class XmlStorageService
                 )
             );
 
-            newCategoriesXml.Save(categoriesFilePath);
+            defaultCategoriesXml.Save(categoriesFilePath);
         }
     }
 
@@ -49,9 +49,9 @@ public class XmlStorageService
     }
 
 
-    public void SaveJobs(XDocument document)
+    public void SaveJobs(XDocument? document)
     {
-        var jobsFilePath = Path.Combine(_xmlFilesDirectory, "Jobs.xml");
-        document.Save(jobsFilePath);
+        var filePath = Path.Combine(_xmlFilesDirectory, "Jobs.xml");
+        document?.Save(filePath);
     }
 }

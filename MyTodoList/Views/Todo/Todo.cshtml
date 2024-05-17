@@ -9,7 +9,7 @@
     @foreach (var job in Model.Jobs.OrderBy(j => j.IsDone))
     {
         <li class="list-group-item d-flex align-items-center @(job.IsDone ? "text-muted" : "")">
-            <div class="name-cell">@job.Name</div>
+            <div class="name-cell @(job.IsDone ? "text-decoration-line-through" : "")">@job.Name</div>
             <div class="category-cell text-center mx-md-2">@job.Category.Name</div>
             <div class="buttons-cell d-flex justify-content-between align-items-center">
                 @if (!job.IsDone)
@@ -17,7 +17,7 @@
                     <form asp-controller="Todo" asp-action="ChangeProgress">
                         <label asp-for="@job.Id">Завершити</label>
                         <input asp-for="@job.Id" type="hidden" name="id"/>
-                        <button type="submit" class="btn btn-outline-success">Завершити</button>
+                        <button type="submit" class="btn btn-outline-primary">Завершити</button>
                     </form>
                 }
                 else

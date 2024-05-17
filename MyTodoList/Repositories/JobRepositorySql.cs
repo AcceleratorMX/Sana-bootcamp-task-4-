@@ -1,6 +1,7 @@
 ﻿using Dapper;
 using MyTodoList.Data;
 using MyTodoList.Data.Models;
+using MyTodoList.Data.Service;
 using MyTodoList.Interfaces;
 
 namespace MyTodoList.Repositories;
@@ -39,7 +40,7 @@ public class JobRepositorySql(DatabaseService databaseService, ILogger<JobReposi
         foreach (var job in jobs)
         {
             job.Category = categories.FirstOrDefault(c => c.Id == job.CategoryId) ??
-                           throw new InvalidOperationException();
+                           throw new Exception($"Job with id {job.Id} has invalid category id {job.CategoryId}");
         }
     
         return jobs;

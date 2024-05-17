@@ -36,7 +36,7 @@ builder.Services.AddSingleton(databaseService);
 
 var xmlFilesDirectory = Path.Combine(
     Directory.GetCurrentDirectory(), builder.Configuration.GetValue<string>("XmlFilesDirectory") ?? 
-                                     throw new InvalidOperationException("XmlFilesDirectory is not valid!"));
+                                     throw new Exception("XmlFilesDirectory is not valid!"));
 builder.Services.AddSingleton(new XmlStorageService(xmlFilesDirectory));
 
 // Add logging

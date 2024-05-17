@@ -1,14 +1,9 @@
 <div class="form-group">
     <form asp-controller="Todo" asp-action="Switch" method="post">
-        <select name="repositoryType" onchange="this.form.submit()">
-            <option value="0">Підключення</option>
+        <select class="form-select text-center switch-form" name="repositoryType" onchange="this.form.submit()">
+            <option value="0" hidden>Підключення</option>
             <option value="sql">SQL</option>
             <option value="xml">XML</option>
         </select>
     </form>
 </div>
-
-
-
-
-

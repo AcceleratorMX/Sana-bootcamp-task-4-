@@ -34,21 +34,12 @@ public class JobRepositorySwitcher : IJobRepository
         {
             var repositoryType = value == _xmlRepository ? "xml" : "sql";
             _httpContextAccessor.HttpContext!.Session.SetString(RepositoryKey, repositoryType);
-            _logger.LogInformation($"Current repository set to: {value.GetType().Name}");
         }
     }
 
-    public void SwitchToSql()
-    {
-        _logger.LogInformation("Switching to SQL repository.");
-        CurrentRepository = _sqlRepository;
-    }
-
-    public void SwitchToXml()
-    {
-        _logger.LogInformation("Switching to XML repository.");
-        CurrentRepository = _xmlRepository;
-    }
+    public void SwitchToSql() => CurrentRepository = _sqlRepository;
+    
+    public void SwitchToXml() => CurrentRepository = _xmlRepository;
 
     public Task<int> AddJob(Job job) => CurrentRepository.AddJob(job);
     public Task<IEnumerable<Job>> GetJobs() => CurrentRepository.GetJobs();

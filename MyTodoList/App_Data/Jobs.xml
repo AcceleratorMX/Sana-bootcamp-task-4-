@@ -1,4 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Jobs>
-
+  <Job id="6" categoryId="2" isDone="true">іфв</Job>
+  <Job id="7" categoryId="1" isDone="false">ясчс</Job>
 </Jobs>
