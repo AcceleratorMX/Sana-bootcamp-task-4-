@@ -86,8 +86,7 @@ public class JobRepositoryXml(XmlStorageService xmlStorageService, ILogger<JobRe
         _xmlStorageService.SaveJobs(jobElement.Document);
         return await Task.FromResult(job.Id);
     }
-
-
+    
     public Task<int> DeleteJob(int id)
     {
         var document = _xmlStorageService.LoadJobs();
@@ -99,8 +98,7 @@ public class JobRepositoryXml(XmlStorageService xmlStorageService, ILogger<JobRe
 
         return Task.FromResult(id);
     }
-
-
+    
     public async Task<IEnumerable<Category>> GetCategories()
     {
         var query = from category in _xmlStorageService.LoadCategories().Descendants("Category")

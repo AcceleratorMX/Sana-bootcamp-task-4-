@@ -1,5 +1,4 @@
 ﻿using Dapper;
-using MyTodoList.Data;
 using MyTodoList.Data.Models;
 using MyTodoList.Data.Service;
 using MyTodoList.Interfaces;
@@ -18,8 +17,7 @@ public class JobRepositorySql(DatabaseService databaseService, ILogger<JobReposi
 
         return await db.ExecuteAsync(query, job);
     }
-
-
+    
     public async Task<Job> GetJob(int id)
     {
         using var db = _databaseService.OpenConnection();
@@ -27,11 +25,9 @@ public class JobRepositorySql(DatabaseService databaseService, ILogger<JobReposi
         return await db.QueryFirstOrDefaultAsync<Job>(query, new { Id = id }) ?? 
                throw new InvalidOperationException($"Job with id {id} not found!");
     }
-
-
+    
     public async Task<IEnumerable<Job>> GetJobs()
     {
-        _logger.LogInformation("Fetching jobs from SQL repository.");
         using var connection = _databaseService.OpenConnection();
     
         var jobs = (await connection.QueryAsync<Job>("SELECT Id, Name, CategoryId, IsDone FROM Jobs")).ToList();
@@ -45,8 +41,7 @@ public class JobRepositorySql(DatabaseService databaseService, ILogger<JobReposi
     
         return jobs;
     }
-
-
+    
     public async Task<int> UpdateJob(Job job)
     {
         using var db = _databaseService.OpenConnection();
@@ -55,8 +50,7 @@ public class JobRepositorySql(DatabaseService databaseService, ILogger<JobReposi
             job
         );
     }
-
-
+    
     public async Task<int> DeleteJob(int id)
     {
         using var db = _databaseService.OpenConnection();
