@@ -26,9 +26,9 @@ public class XmlStorageService
         {
             var defaultCategoriesXml = new XDocument(
                 new XElement("Categories",
-                    new XElement("Category", new XAttribute("id", 1), "Work"),
-                    new XElement("Category", new XAttribute("id", 2), "Personal"),
-                    new XElement("Category", new XAttribute("id", 3), "Home")
+                    new XElement("Category", new XAttribute("id", 1), "Дім"),
+                    new XElement("Category", new XAttribute("id", 2), "Робота"),
+                    new XElement("Category", new XAttribute("id", 3), "Навчання")
                 )
             );
 
